@@ -1,0 +1,61 @@
+def isRelease = rootProject.ext.isRelease
+
+def androidId = rootProject.ext.app
+
+def appId = rootProject.ext.appId
+
+if (isRelease){
+    apply plugin : 'com.android.library'
+}else{
+    apply plugin : 'com.android.application'
+}
+
+android {
+    compileSdkVersion androidId.compileSdkVersion
+    buildToolsVersion androidId.buildToolsVersion
+
+    defaultConfig {
+        if (!isRelease){
+            applicationId appId.common
+        }
+
+        minSdkVersion androidId.minSdkVersion
+        targetSdkVersion androidId.targetSdkVersion
+        versionCode androidId.versionCode
+        versionName androidId.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+  /*  implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'*/
+    rootProject.ext.dependency.each{
+        k,v ->
+            implementation v
+    }
+    rootProject.ext.testDependency.each{
+        k, v -> testImplementation v
+    }
+    rootProject.ext.androidTestDependency.each{
+        k, v ->
+            androidTestImplementation v
+    }
+}

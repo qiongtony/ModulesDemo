@@ -4,6 +4,7 @@
 ext {
 
     // 生产/开发环境
+    // true，集成化模式，false，组件化模式
     isRelease = true
 
     // 主机地址
@@ -20,7 +21,6 @@ ext {
     app = [
             compileSdkVersion : 30,
             buildToolsVersion: "30.0.3",
-            applicationId : "com.example.modulesdemo",
             minSdkVersion : 21,
             targetSdkVersion : 30,
             versionCode : 1,
@@ -29,8 +29,9 @@ ext {
 
     // 创建map，不需要指定类型
     appId = [
-            app : "com.example.gradle",
-            library : "com.example.library"
+            app : "com.example.app",
+            order : "com.example.order",
+            common : "com.example.common"
     ]
 
     dependency = [
