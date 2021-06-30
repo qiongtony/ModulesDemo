@@ -1,4 +1,4 @@
-package com.example.common;
+package example.library;
 
 public class GlideManager {
 }
