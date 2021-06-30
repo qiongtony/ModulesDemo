@@ -86,4 +86,5 @@ dependencies {
         k, v ->
             androidTestImplementation v
     }
+    implementation project(":library")
 }
