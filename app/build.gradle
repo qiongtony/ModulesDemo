@@ -8,6 +8,8 @@ def depend = rootProject.ext.dependency
 
 def url = rootProject.ext.url
 
+def isRelease = rootProject.ext.isRelease
+
 println "hello world!"
 
 android {
@@ -42,6 +44,9 @@ android {
                 }
             }
         }
+
+        // 只能在defaultConfig或buildTypes里添加BuildConfig参数，三个参数分别为：类型，变量名，变量值
+        buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
     }
 
     buildTypes {
@@ -57,6 +62,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        // 只能在defaultConfig或buildTypes里添加BuildConfig参数，三个参数分别为：类型，变量名，变量值
+        // 不能放在这，应该要放在所以的type里面
+//        buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
