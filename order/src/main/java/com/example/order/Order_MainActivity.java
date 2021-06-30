@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import example.library.router.PathRecordManager;
+
 public class Order_MainActivity extends AppCompatActivity {
 
     @Override
@@ -15,21 +17,16 @@ public class Order_MainActivity extends AppCompatActivity {
     }
 
     public void jumpToMain(View view){
-        try {
-            Class<?> clazz = Class.forName("com.example.modulesdemo.MainActivity");
-            openPage(clazz);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        //            Class<?> clazz = Class.forName("com.example.modulesdemo.MainActivity");
+        Class<?> clazz = PathRecordManager.getClass("main", "MainActivity");
+
+        openPage(clazz);
     }
 
     public void jumpToCommon(View view){
-        try {
-            Class<?> clazz = Class.forName("com.example.common.Common_MainActivity");
-            openPage(clazz);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        //            Class<?> clazz = Class.forName("com.example.common.Common_MainActivity");
+        Class<?> clazz = PathRecordManager.getClass("common", "Common_MainActivity");
+        openPage(clazz);
     }
 
     private void openPage(Class<?> clazz){
