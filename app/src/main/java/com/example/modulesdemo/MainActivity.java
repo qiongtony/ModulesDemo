@@ -1,14 +1,16 @@
 package com.example.modulesdemo;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.annotation.ARouter;
+
 import example.library.router.PathRecordManager;
 
+@ARouter(group = "app",path = "app/MainActivity")
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -21,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void jumpToCommon(View view){
         //            Class<?> clazz = Class.forName("com.example.common.Common_MainActivity");
-        Class<?> clazz = PathRecordManager.getClass("common", "Common_MainActivity");
+//        Class<?> clazz = PathRecordManager.getClass("common", "Common_MainActivity");
+        Class<?> clazz = MainActivity$$ARouter.findTargetClass("app", "app/MainActivity");
         openPage(clazz);
     }
 

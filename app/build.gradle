@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
 }
+apply plugin: 'kotlin-android'
 
 def app = rootProject.ext.app
 
@@ -47,6 +48,12 @@ android {
 
         // 只能在defaultConfig或buildTypes里添加BuildConfig参数，三个参数分别为：类型，变量名，变量值
         buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
+
+        javaCompileOptions{
+            annotationProcessorOptions {
+                arguments = [content : "hello javapoet"]
+            }
+        }
     }
 
     buildTypes {
@@ -107,8 +114,17 @@ dependencies {
     }
     implementation project(":library")
 
+    implementation project(":annotation")
+
+    annotationProcessor project(":compiler")
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
 
     /*testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'*/
+}
+repositories {
+    mavenCentral()
 }

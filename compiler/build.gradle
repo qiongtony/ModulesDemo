@@ -1,0 +1,27 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies{
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // 依赖注解
+    implementation project(":annotation")
+
+    // AnnotationProcessor
+    compileOnly 'com.google.auto.service:auto-service:1.0-rc4'
+    annotationProcessor'com.google.auto.service:auto-service:1.0-rc4'
+
+
+    // javapoet帮助生成java代码
+    implementation 'com.squareup:javapoet:1.11.1'
+}
+
+// java控制台输出中文乱码
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}

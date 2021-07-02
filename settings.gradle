@@ -1,3 +1,5 @@
+include ':compiler'
+include ':annotation'
 include ':order'
 include ':common'
 include ':library'
