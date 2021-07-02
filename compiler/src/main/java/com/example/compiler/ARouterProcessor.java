@@ -2,6 +2,8 @@ package com.example.compiler;
 
 import com.example.annotation.ARouter;
 import com.google.auto.service.AutoService;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeSpec;
 
 import java.util.Set;
 
@@ -59,6 +61,7 @@ public class ARouterProcessor extends AbstractProcessor {
             mMessager.printMessage(Diagnostic.Kind.NOTE, "被@ARouter注解的类有：" + className);
 
             String finalClassName = className + "$$ARouter";
+
 
         }
         return false;
