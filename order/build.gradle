@@ -33,6 +33,14 @@ android {
 
         // 只能在defaultConfig或buildTypes里添加BuildConfig参数，三个参数分别为：类型，变量名，变量值
         buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
+
+        javaCompileOptions{
+            annotationProcessorOptions {
+                arguments = [moduleName : project.getName(),
+                             packageNameForAPT : packageNameForAPT
+                ]
+            }
+        }
     }
 
     // 资源增加前缀
@@ -87,10 +95,9 @@ dependencies {
             androidTestImplementation v
     }
     implementation project(":library")
-    implementation "androidx.core:core-ktx:+"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    annotationProcessor project(":compiler")
 }
-apply plugin: 'kotlin-android'
 repositories {
     mavenCentral()
 }

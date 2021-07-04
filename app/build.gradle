@@ -51,7 +51,9 @@ android {
 
         javaCompileOptions{
             annotationProcessorOptions {
-                arguments = [content : "hello javapoet"]
+                arguments = [moduleName : project.getName(),
+                             packageNameForAPT : packageNameForAPT
+                ]
             }
         }
     }
@@ -113,8 +115,6 @@ dependencies {
         implementation project(":common")
     }
     implementation project(":library")
-
-    implementation project(":annotation")
 
     annotationProcessor project(":compiler")
     implementation "androidx.core:core-ktx:+"

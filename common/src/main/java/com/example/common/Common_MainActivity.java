@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.annotation.ARouter;
+
 import example.library.router.PathRecordManager;
 
+@ARouter(group = "common", path = "common/Common_MainActivity")
 public class Common_MainActivity extends AppCompatActivity {
 
     @Override

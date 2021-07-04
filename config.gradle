@@ -7,6 +7,9 @@ ext {
     // true，集成化模式，false，组件化模式
     isRelease = true
 
+    // 存在APT生成类文件的包名
+    packageNameForAPT = "com.example.apt"
+
     // 主机地址
     url = [
             "debug" : "\"http://www.test.debug.com/\"",

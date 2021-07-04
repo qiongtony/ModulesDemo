@@ -7,6 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.annotation.ARouter;
+import com.example.annotation.model.RouterBean;
+import com.example.apt.ARouter$$Group$$order;
+import com.example.arouter_api.ARouterLoadPath;
+
+import java.util.Map;
 
 import example.library.router.PathRecordManager;
 
@@ -29,9 +34,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void jumpToOrder(View view){
-        //            Class<?> clazz = Class.forName("com.example.order.Order_MainActivity");
+        /* Class<?> clazz = Class.forName("com.example.order.Order_MainActivity");
         Class<?> clazz = PathRecordManager.getClass("order", "Order_MainActivity");
-        openPage(clazz);
+        openPage(clazz);*/
+        // 使用APT生成的路由文件进行跳转
+        ARouter$$Group$$order orderGroup = new ARouter$$Group$$order();
+        Class<? extends ARouterLoadPath> orderPathClazz = orderGroup.loadGroup()
+                .get("order");
+        try {
+            ARouterLoadPath loadPath = orderPathClazz.newInstance();
+            Map<String, RouterBean> stringRouterBeanMap = loadPath.loadPath();
+            RouterBean routerBean = stringRouterBeanMap.get("order/Order_MainActivity");
+            openPage(routerBean.getClazz());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void openPage(Class<?> clazz){
