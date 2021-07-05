@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.annotation.ARouter;
+import com.example.annotation.Parameter;
 import com.example.annotation.model.RouterBean;
 import com.example.apt.ARouter$$Group$$order;
+import com.example.arouter_api.ARouterLoadParameter;
 import com.example.arouter_api.ARouterLoadPath;
 
 import java.util.Map;
@@ -18,10 +21,18 @@ import example.library.router.PathRecordManager;
 @ARouter(group = "app",path = "app/MainActivity")
 public class MainActivity extends AppCompatActivity {
 
+
+    @Parameter()
+    String name;
+    @Parameter(name = "agex")
+    int age;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ARouterLoadParameter parameter = new MainActivity$$Parameter();
+        parameter.loadParameter(this);
+        Log.e(getClass().getSimpleName(), "WWS name = " + name  + " age = " + age);
         // 获取buildConfig类的属性
         String type = BuildConfig.host;
     }
@@ -45,7 +56,12 @@ public class MainActivity extends AppCompatActivity {
             ARouterLoadPath loadPath = orderPathClazz.newInstance();
             Map<String, RouterBean> stringRouterBeanMap = loadPath.loadPath();
             RouterBean routerBean = stringRouterBeanMap.get("order/Order_MainActivity");
-            openPage(routerBean.getClazz());
+            Intent intent = new Intent(this, routerBean.getClazz());
+            intent.putExtra("orderId", "123456");
+            intent.putExtra("value", 100L);
+            startActivity(intent);
+
+//            openPage(routerBean.getClazz());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {

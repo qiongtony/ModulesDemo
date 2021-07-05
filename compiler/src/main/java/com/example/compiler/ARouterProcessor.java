@@ -75,7 +75,7 @@ public class ARouterProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(ARouter.class);
-        if (elements == null){
+        if (annotations == null || annotations.size() == 0){
             return false;
         }
         for (Element element : elements){

@@ -23,4 +23,16 @@ public interface Constants {
     String PATH_PARAMETER_NAME = "pathMap";
 
     String GROUP_PARAMTETER_NAME = "groupMap";
+
+    String PARAMETERS_CLASS = "com.example.annotation.Parameter";
+
+    // 生成的参数加载类，类名的后缀，如：MainActivity $$Parameter
+    String PARAMETER_NAME_SUFFIX = "$$Parameter";
+
+    String PARAMETER_INTERFACE_PATH = "com.example.arouter_api.ARouterLoadParameter";
+
+    String ACTIVITY_NAME = "activity";
+
+    String STRING_CLASS_NAME = "java.lang.String";
+
 }
