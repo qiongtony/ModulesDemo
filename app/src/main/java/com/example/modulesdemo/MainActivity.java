@@ -16,6 +16,7 @@ import com.example.arouter_api.ARouterLoadPath;
 
 import java.util.Map;
 
+import example.library.router.ParameterManager;
 import example.library.router.PathRecordManager;
 
 @ARouter(group = "app",path = "app/MainActivity")
@@ -30,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ARouterLoadParameter parameter = new MainActivity$$Parameter();
-        parameter.loadParameter(this);
+        ParameterManager.getInstance().loadParameter(this);
+        /*ARouterLoadParameter parameter = new MainActivity$$Parameter();
+        parameter.loadParameter(this);*/
         Log.e(getClass().getSimpleName(), "WWS name = " + name  + " age = " + age);
         // 获取buildConfig类的属性
         String type = BuildConfig.host;

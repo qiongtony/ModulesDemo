@@ -10,6 +10,7 @@ import android.view.View;
 import com.example.annotation.ARouter;
 import com.example.annotation.Parameter;
 
+import example.library.router.ParameterManager;
 import example.library.router.PathRecordManager;
 
 @ARouter(group = "order", path = "order/Order_MainActivity")
@@ -24,7 +25,8 @@ public class Order_MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new Order_MainActivity$$Parameter().loadParameter(this);
+        ParameterManager.getInstance().loadParameter(this);
+//        new Order_MainActivity$$Parameter().loadParameter(this);
 
         Log.e(getClass().getSimpleName() , "WWS onCreate orderId = " + orderId + " value = " + value);
         setContentView(R.layout.order_activity_main);
