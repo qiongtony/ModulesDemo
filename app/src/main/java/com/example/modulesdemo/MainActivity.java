@@ -1,5 +1,6 @@
 package com.example.modulesdemo;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -18,11 +19,14 @@ import java.util.Map;
 
 import example.library.router.ParameterManager;
 import example.library.router.PathRecordManager;
+import example.library.router.RouterManager;
 
-@ARouter(group = "app",path = "app/MainActivity")
+@ARouter(group = "app",path = "/app/MainActivity")
 public class MainActivity extends AppCompatActivity {
 
 
+    public static final int COMMON_REQUEST_CODE = 133;
+    public static final int REQUEST_CODE_ORDER = 144;
     @Parameter()
     String name;
     @Parameter(name = "agex")
@@ -40,40 +44,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void jumpToCommon(View view){
-        //            Class<?> clazz = Class.forName("com.example.common.Common_MainActivity");
-//        Class<?> clazz = PathRecordManager.getClass("common", "Common_MainActivity");
-        Class<?> clazz = MainActivity$$ARouter.findTargetClass("app", "app/MainActivity");
-        openPage(clazz);
+        RouterManager.getInstance().build("/common/Common_MainActivity")
+                .setCode(COMMON_REQUEST_CODE)
+                .withString("userName", "wuweishan")
+                .navigation(this);
     }
 
     public void jumpToOrder(View view){
-        /* Class<?> clazz = Class.forName("com.example.order.Order_MainActivity");
-        Class<?> clazz = PathRecordManager.getClass("order", "Order_MainActivity");
-        openPage(clazz);*/
-        // 使用APT生成的路由文件进行跳转
-        ARouter$$Group$$order orderGroup = new ARouter$$Group$$order();
-        Class<? extends ARouterLoadPath> orderPathClazz = orderGroup.loadGroup()
-                .get("order");
-        try {
-            ARouterLoadPath loadPath = orderPathClazz.newInstance();
-            Map<String, RouterBean> stringRouterBeanMap = loadPath.loadPath();
-            RouterBean routerBean = stringRouterBeanMap.get("order/Order_MainActivity");
-            Intent intent = new Intent(this, routerBean.getClazz());
-            intent.putExtra("orderId", "123456");
-            intent.putExtra("value", 100L);
-            startActivity(intent);
-
-//            openPage(routerBean.getClazz());
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
-
+        RouterManager.getInstance()
+                .build("/order/Order_MainActivity")
+                .withString("orderId", "id$@2223222")
+                .withLong("value", 123456L)
+                .setCode(REQUEST_CODE_ORDER)
+                .navigation(this);
     }
 
     private void openPage(Class<?> clazz){
         Intent intent = new Intent(this, clazz);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == REQUEST_CODE_ORDER ||requestCode == COMMON_REQUEST_CODE) && data != null){
+            String result = data.getExtras().getString("result");
+            Log.e(getClass().getSimpleName(), "WWS onActivityResult result = " + result);
+        }
     }
 }

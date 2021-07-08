@@ -2,6 +2,7 @@ package com.example.order;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +13,9 @@ import com.example.annotation.Parameter;
 
 import example.library.router.ParameterManager;
 import example.library.router.PathRecordManager;
+import example.library.router.RouterManager;
 
-@ARouter(group = "order", path = "order/Order_MainActivity")
+@ARouter(group = "order", path = "/order/Order_MainActivity")
 public class Order_MainActivity extends AppCompatActivity {
 
     @Parameter()
@@ -33,16 +35,17 @@ public class Order_MainActivity extends AppCompatActivity {
     }
 
     public void jumpToMain(View view){
-        //            Class<?> clazz = Class.forName("com.example.modulesdemo.MainActivity");
-        Class<?> clazz = PathRecordManager.getClass("main", "MainActivity");
-
-        openPage(clazz);
+        RouterManager.getInstance().build("/app/MainActivity")
+                .setResult(true)
+                .setCode(Activity.RESULT_OK)
+                .withString("result", "order success!")
+                .navigation(this);
     }
 
     public void jumpToCommon(View view){
-        //            Class<?> clazz = Class.forName("com.example.common.Common_MainActivity");
-        Class<?> clazz = PathRecordManager.getClass("common", "Common_MainActivity");
-        openPage(clazz);
+        RouterManager.getInstance().build("/common/Common_MainActivity")
+                .withString("userName", "Mr.Order")
+                .navigation(this);
     }
 
     private void openPage(Class<?> clazz){

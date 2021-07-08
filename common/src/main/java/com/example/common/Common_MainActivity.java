@@ -2,6 +2,7 @@ package com.example.common;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,8 +10,9 @@ import android.view.View;
 import com.example.annotation.ARouter;
 
 import example.library.router.PathRecordManager;
+import example.library.router.RouterManager;
 
-@ARouter(group = "common", path = "common/Common_MainActivity")
+@ARouter(group = "common", path = "/common/Common_MainActivity")
 public class Common_MainActivity extends AppCompatActivity {
 
     @Override
@@ -20,15 +22,19 @@ public class Common_MainActivity extends AppCompatActivity {
     }
 
     public void jumpToMain(View view){
-        //            Class<?> clazz = Class.forName("com.example.modulesdemo.MainActivity");
-        Class<?> clazz = PathRecordManager.getClass("main", "MainActivity");
-        openPage(clazz);
+        RouterManager.getInstance().build("/app/MainActivity")
+                .setResult(true)
+                .setCode(Activity.RESULT_OK)
+                .withString("result", "common callback!")
+                .navigation(this);
     }
 
     public void jumpToOrder(View view){
-        //            Class<?> clazz = Class.forName("com.example.order.Order_MainActivity");
-        Class<?> clazz = PathRecordManager.getClass("order", "Order_MainActivity");
-        openPage(clazz);
+        RouterManager.getInstance()
+                .build("/order/Order_MainActivity")
+                .withString("orderId", "id@11111")
+                .withLong("value", 654321L)
+                .navigation(this);
     }
 
     private void openPage(Class<?> clazz){
