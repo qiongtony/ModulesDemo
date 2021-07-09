@@ -57,6 +57,8 @@ public class ARouterProcessor extends AbstractProcessor {
 
     // 临时map存储，存放路由group信息
     private Map<String, String> tempGroupMap = new HashMap<>();
+    private TypeMirror mAppCompatActivityType;
+    private TypeMirror mActivityType;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -70,6 +72,12 @@ public class ARouterProcessor extends AbstractProcessor {
         mMessager.printMessage(Diagnostic.Kind.NOTE, "moduleName = " + mModuleName);
         mPackageNameForAPT = processingEnv.getOptions().get(Constants.PACKAGE_NAME_FOR_APT);
         mMessager.printMessage(Diagnostic.Kind.NOTE, "packageNameForAPT = " + mPackageNameForAPT);
+
+
+        mAppCompatActivityType = mElements.getTypeElement(Constants.APP_COMPAT_ACTIVITY_FULL_NAME).asType();
+        mActivityType = mElements.getTypeElement(Constants.ACTIVITY_FULL_NAME).asType();
+
+        TypeElement typeElement = mElements.getTypeElement(Constants.ACTIVITY_FULL_NAME);
     }
 
     @Override
@@ -96,6 +104,7 @@ public class ARouterProcessor extends AbstractProcessor {
                     .setPath(aRouter.path())
                     .setElement(element)
                     .build();
+
             routerBean.setType(RouterBean.Type.ACTIVITY);
 
             valueOfPathMap(routerBean);

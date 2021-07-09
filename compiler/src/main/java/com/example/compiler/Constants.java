@@ -35,4 +35,8 @@ public interface Constants {
 
     String STRING_CLASS_NAME = "java.lang.String";
 
+    String APP_COMPAT_ACTIVITY_FULL_NAME = "androidx.appcompat.app.AppCompatActivity";
+
+    String ACTIVITY_FULL_NAME = "android.app.Activity";
+
 }

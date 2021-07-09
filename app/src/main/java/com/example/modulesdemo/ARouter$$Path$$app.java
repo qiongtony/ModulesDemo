@@ -6,6 +6,8 @@ import com.example.arouter_api.ARouterLoadPath;
 import java.util.HashMap;
 import java.util.Map;
 
+import example.library.app.drawable.AppDrawable;
+
 public class ARouter$$Path$$app implements ARouterLoadPath {
     @Override
     public Map<String, RouterBean> loadPath() {
@@ -17,6 +19,14 @@ public class ARouter$$Path$$app implements ARouterLoadPath {
                         "app",
                         "app/MainActivity",
                         MainActivity.class
+                )
+        );
+        pathMap.put("app/getDrawable",
+                RouterBean.createSimple(
+                        RouterBean.Type.CALL,
+                        "app",
+                        "app/getDrawable",
+                        AppDrawable.class
                 )
         );
         return pathMap;

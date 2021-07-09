@@ -9,7 +9,8 @@ import javax.lang.model.element.Element;
 public class RouterBean {
 
     public enum Type{
-        ACTIVITY
+        ACTIVITY,
+        CALL
     }
 
     // 类型：Activity，后续可能支持Fragment
