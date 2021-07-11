@@ -13,3 +13,5 @@
 2021/7/05实现用apt方式根据Parameter注解生成解析Intent内的参数，如MainActivity，生成的类为MainActivity$$Parameter
 
 2021/7/06实现每个module的初始化，使用抽象初始化接口，在app的application里通过反射创建每个module的初始化实例，并进行初始化
+
+2021/7/11实现Parameter获取其他模块的提供的功能，如图片、Xxx请求；

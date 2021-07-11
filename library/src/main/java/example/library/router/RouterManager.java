@@ -35,9 +35,9 @@ public class RouterManager {
     }
 
     public Object navigation(BundleManager bundleManager) {
+        Object result = new Object();
         try {
             Class<? extends ARouterLoadGroup> loadGroupClazz = (Class<? extends ARouterLoadGroup>) Class.forName(GROUP_PACKAGE_PREFIX + bundleManager.getGroup());
-
             ARouterLoadGroup loadGroup = loadGroupClazz.newInstance();
             Map<String, Class<? extends ARouterLoadPath>> loadGroupMap = loadGroup.loadGroup();
             Class<? extends ARouterLoadPath> loadPathClazz = loadGroupMap.get(bundleManager.getGroup());
@@ -64,10 +64,13 @@ public class RouterManager {
                         bundleManager.getActivity().startActivityForResult(intent, bundleManager.getCode());
                     }
                     break;
+                case CALL:
+                     result = routerBean.getClazz().newInstance();
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new Object();
+        return result;
     }
 }

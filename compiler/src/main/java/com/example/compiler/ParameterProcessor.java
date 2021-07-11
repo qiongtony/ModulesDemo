@@ -6,6 +6,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
@@ -45,6 +46,8 @@ public class ParameterProcessor extends AbstractProcessor {
     private String mModuleName;
     private String mPackageNameForAPT;
     private Map<TypeElement, List<Element>> mTempMap = new HashMap<>();
+    private TypeName mRouterManagerType;
+
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -58,6 +61,9 @@ public class ParameterProcessor extends AbstractProcessor {
         mMessager.printMessage(Diagnostic.Kind.NOTE, "ParameterProcessor init");
         mPackageNameForAPT = processingEnv.getOptions().get(Constants.PACKAGE_NAME_FOR_APT);
         mMessager.printMessage(Diagnostic.Kind.NOTE, "ParameterProcessor packageNameForAPT = " + mPackageNameForAPT);
+
+        mRouterManagerType = TypeName.get(mElements.getTypeElement(Constants.ROUTER_MANAGER_CLASS_NAME).asType());
+
     }
 
     @Override
@@ -106,6 +112,15 @@ public class ParameterProcessor extends AbstractProcessor {
                     TypeElement typeElement = mElements.getTypeElement(String.class.getName());
 
                     String parameterName = (parameter.name() == null || parameter.name().length() == 0 ) ? element.getSimpleName().toString() :  parameter.name();
+                    if (parameter.name().startsWith("/")){
+                        // activity.mOrderDrawable = (OrderDrawable) RouterManager.getInstance().build("/order/getDrawable").navigation(activity);
+                        methodSpecBuilder.addStatement(
+                                "$N.$N = ($T)$T.getInstance().build($S).$N($N)",
+                                Constants.ACTIVITY_NAME, element.getSimpleName().toString(),
+                                TypeName.get(element.asType()), mRouterManagerType, parameterName, Constants.NAVIGATION_METHOD_NAME, Constants.ACTIVITY_NAME
+                        );
+                        continue;
+                    }
                     mMessager.printMessage(Diagnostic.Kind.NOTE, "element.kind = " + element.asType().getKind().toString() + " parameterName = " + parameterName);
                     mMessager.printMessage(Diagnostic.Kind.NOTE, "clazzName = " + (element.asType().toString()));
                     switch (element.asType().getKind()){

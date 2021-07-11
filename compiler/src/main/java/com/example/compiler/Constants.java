@@ -39,4 +39,8 @@ public interface Constants {
 
     String ACTIVITY_FULL_NAME = "android.app.Activity";
 
+    String ROUTER_MANAGER_CLASS_NAME = "example.library.router.RouterManager";
+
+    String NAVIGATION_METHOD_NAME = "navigation";
+
 }

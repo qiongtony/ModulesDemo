@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.annotation.ARouter;
 import com.example.annotation.Parameter;
@@ -17,6 +18,7 @@ import com.example.arouter_api.ARouterLoadPath;
 
 import java.util.Map;
 
+import example.library.order.drawable.OrderDrawable;
 import example.library.router.ParameterManager;
 import example.library.router.PathRecordManager;
 import example.library.router.RouterManager;
@@ -31,11 +33,19 @@ public class MainActivity extends AppCompatActivity {
     String name;
     @Parameter(name = "agex")
     int age;
+
+    @Parameter(name = "/order/getDrawable")
+    OrderDrawable mOrderDrawable;
+
+    private ImageView ivOrder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ivOrder = findViewById(R.id.iv_order);
+
         ParameterManager.getInstance().loadParameter(this);
+        ivOrder.setImageResource(mOrderDrawable.getDrawable());
         /*ARouterLoadParameter parameter = new MainActivity$$Parameter();
         parameter.loadParameter(this);*/
         Log.e(getClass().getSimpleName(), "WWS name = " + name  + " age = " + age);

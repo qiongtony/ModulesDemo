@@ -98,14 +98,24 @@ public class ARouterProcessor extends AbstractProcessor {
             // 获取注解值
             ARouter aRouter = element.getAnnotation(ARouter.class);
 
+            String group = aRouter.group();
+            String path = aRouter.path();
+            if (group == null || group.length() == 0){
+                group = path.substring(1, path.lastIndexOf("/"));
+            }
+
             // 生成路由实体类
             RouterBean routerBean = new RouterBean.Builder()
-                    .setGroup(aRouter.group())
-                    .setPath(aRouter.path())
+                    .setGroup(group)
+                    .setPath(path)
                     .setElement(element)
                     .build();
+            if (typeUtils.isSubtype(element.asType(), mActivityType) || typeUtils.isSubtype(element.asType(), mAppCompatActivityType)){
+                routerBean.setType(RouterBean.Type.ACTIVITY);
+            }else{
+                routerBean.setType(RouterBean.Type.CALL);
+            }
 
-            routerBean.setType(RouterBean.Type.ACTIVITY);
 
             valueOfPathMap(routerBean);
         }
